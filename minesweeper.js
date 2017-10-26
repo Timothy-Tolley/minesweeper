@@ -54,9 +54,9 @@ var board = {
 
 function startGame (cell) {
 var size=board.cells.length
-  for (var i=0; i<=size; i++){
-    var count= countSurroundingMines(i);
-board.cells[i].surroundingMines = count(i);
+  for (var i=board.cells[0]; i<=size; i++){
+    var count= countSurroundingMines()
+board.cells[i].surroundingMines = count();
 }
 
 
@@ -87,7 +87,7 @@ function checkForWin () {
 function countSurroundingMines (cell) {
   let count=0
   var surrounding = lib.getSurroundingCells(cell.row, cell.col)
-  for (var j=0; j<= length.surrounding; j++){
+  for (var j=0; j<= surrounding.length; j++){
     if(cells.isMine== true){
       count ++
     }
