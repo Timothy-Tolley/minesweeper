@@ -23,11 +23,15 @@ function makeBoard(size){
 function restartGame(){
   window.location.reload(false)
 }
+function randomNumber(minimum, maximum){
+    return Math.round( Math.random() * (maximum - minimum) + minimum);
+}
+
 
 
 function startGame () {
 
-  makeBoard(3)
+  makeBoard(randomNumber(2, 5))
   //count mines surrounding
   let cell = 0
     for (cell in board.cells) {
