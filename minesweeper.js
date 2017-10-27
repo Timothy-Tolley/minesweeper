@@ -20,10 +20,14 @@ function makeBoard(size){
   }
 }
 
+function restartGame(){
+  window.location.reload(false)
+}
+
 
 function startGame () {
 
-  makeBoard(4)
+  makeBoard(3)
   //count mines surrounding
   let cell = 0
     for (cell in board.cells) {
@@ -59,8 +63,10 @@ if(board.cells[cell].hidden){
   }
 }
   // if the cells all pass then above conditions display =
- lib.displayMessage('You win!')
+ lib.displayMessage('You win! Push down on Keyboard to Restart!')
+ document.addEventListener('keydown', restartGame)
 }
+
 
 // Define this function to count the number of mines around the cell
 // (there could be as many as 8). You don't have to get the surrounding
