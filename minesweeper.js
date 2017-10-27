@@ -1,58 +1,29 @@
 document.addEventListener('DOMContentLoaded', startGame)
 
 // Define your `board` object here!
-var board = {
-  cells: [{row:0,
-  col:0,
-  isMine: false,
-  hidden: true
-},
-{row:0,
-   col:1,
-   isMine: true,
-   hidden: true
- },
-{row:0,
-   col:2,
-   isMine: false,
-   hidden: true
- },
-{row:1,
-   col:0,
-   isMine: false,
-   hidden: true
- },
- {row:1,
-   col:1,
-   isMine: true,
-   hidden: true
- },
- {row:1,
-   col:2,
-   isMine: true,
-   hidden: true
- },
-{row:2,
-   col:0,
-   isMine: false,
-   hidden: true
- },
-{row:2,
-   col:1,
-   isMine: false,
-   hidden: true
- },
- {row:2,
-   col:2,
-   isMine: false,
-   hidden: true
- }]
 
- }
-
+var board= {
+  cells:[]
+}
+function makeBoard(size){
+  for(i=0; i<=size; i++){
+    for(j=0;j<=size;j++){
+    board.cells.push(
+      {row:i,
+        col:j,
+        isMine:Math.random() < 0.2,
+        hidden:true,
+        isMarked:false,
+        surroundingMines:0
+      })
+    }
+  }
+}
 
 
 function startGame () {
+
+  makeBoard(4)
   //count mines surrounding
   let cell = 0
     for (cell in board.cells) {
@@ -105,9 +76,9 @@ function countSurroundingMines (cell) {
     board.cells[cell].col
   )
   let count = 0
-  let curZone = undefined
-  for (curZone in surrounding) {
-    if (surrounding[curZone].isMine) {
+  let curCell = 0
+  for (curCell in surrounding) {
+    if (surrounding[curCell].isMine) {
       count++
     } // if
   } // for
