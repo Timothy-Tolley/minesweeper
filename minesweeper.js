@@ -52,13 +52,14 @@ var board = {
 
 
 
-function startGame (cell) {
-var size=board.cells.length
-  for (var i=board.cells[0]; i<=size; i++){
-    var count= countSurroundingMines()
-board.cells[i].surroundingMines = count();
-}
-
+function startGame () {
+  //count mines surrounding
+  let cell = 0
+    for (cell in board.cells) {
+      board.cells[cell].surroundingMines = countSurroundingMines(cell)
+  }
+  document.addEventListener('click', checkForWin)
+  document.addEventListener('contextmenu', checkForWin)
 
 
   // Don't remove this function call: it makes the game work!
@@ -70,10 +71,24 @@ board.cells[i].surroundingMines = count();
 // 1. Are all of the cells that are NOT mines visible?
 // 2. Are all of the mines marked?
 function checkForWin () {
-
-  // You can use this function call to declare a winner (once you've
-  // detected that they've won, that is!)
-  //   lib.displayMessage('You win!')
+//for each cell
+  let cell = 0
+    for (cell in board.cells) {
+//if the cell is a mine but is not marked then start process again
+if (board.cells[cell].isMine){
+  if(!board.cells[cell].isMarked){
+    return
+  }
+}
+}
+//if the cell is not a mine and is still not revealed then start again
+if(board.cells[cell].hidden){
+  if(!board.cells[cell].isMine){
+    return
+  }
+}
+  // if the cells all pass then above conditions display =
+ lib.displayMessage('You win!')
 }
 
 // Define this function to count the number of mines around the cell
@@ -85,12 +100,16 @@ function checkForWin () {
 // It will return cell objects in an array. You should loop through
 // them, counting the number of times `cell.isMine` is true.
 function countSurroundingMines (cell) {
-  let count=0
-  var surrounding = lib.getSurroundingCells(cell.row, cell.col)
-  for (var j=0; j<= surrounding.length; j++){
-    if(cells.isMine== true){
-      count ++
-    }
-  }
-return count
+  var surrounding= lib.getSurroundingCells(
+    board.cells[cell].row,
+    board.cells[cell].col
+  )
+  let count = 0
+  let curZone = undefined
+  for (curZone in surrounding) {
+    if (surrounding[curZone].isMine) {
+      count++
+    } // if
+  } // for
+  return count
 }
