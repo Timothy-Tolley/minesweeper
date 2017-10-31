@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', startGame)
 
-// Define your `board` object here!
 
+//sounds
+
+let cricket = new Audio(["audio/cricket.wav"])
+
+// Define your `board` object here!
 var board= {
   cells:[]
 }
@@ -20,14 +24,10 @@ function makeBoard(size){
   }
 }
 
-function restartGame(){
-  window.location.reload(false)
-}
+
 function randomNumber(minimum, maximum){
     return Math.round( Math.random() * (maximum - minimum) + minimum);
 }
-
-
 
 function startGame () {
 
@@ -37,8 +37,12 @@ function startGame () {
     for (cell in board.cells) {
       board.cells[cell].surroundingMines = countSurroundingMines(cell)
   }
+
+
   document.addEventListener('click', checkForWin)
   document.addEventListener('contextmenu', checkForWin)
+
+
 
 
   // Don't remove this function call: it makes the game work!
@@ -50,6 +54,7 @@ function startGame () {
 // 1. Are all of the cells that are NOT mines visible?
 // 2. Are all of the mines marked?
 function checkForWin () {
+
 //for each cell
   let cell = 0
     for (cell in board.cells) {
@@ -59,16 +64,33 @@ if (board.cells[cell].isMine){
     return
   }
 }
-}
+
 //if the cell is not a mine and is still not revealed then start again
 if(board.cells[cell].hidden){
   if(!board.cells[cell].isMine){
     return
   }
 }
-  // if the cells all pass then above conditions display =
- lib.displayMessage('You win! Push down on Keyboard to Restart!')
- document.addEventListener('keydown', restartGame)
+
+}
+
+  // if the cells all pass the above conditions then display =
+ lib.displayMessage('You Win! Push up on Keyboard to restart with same board size! Push down to try a new size! ')
+
+
+
+ function restartGameNew(){
+   window.location.reload(true)
+ }
+ function restartGameSame(){
+   window.location.reload(false)
+ }
+
+ document.addEventListener('keydown', restartGameNew)
+ document.addEventListener('keyup', restartGameSame)
+ cricket.play()
+
+
 }
 
 
